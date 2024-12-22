@@ -2,7 +2,14 @@
 
 Bibtex completion source for [nvim-cmp](https://github.com/hrsh7th/nvim-cmp). Currently supports `\addbibresource{}`, or manually specified file names.
 
-Note, writing this was a quick one day job between classes, and as such many things may not work yet. Open an issue and I'll get around to sorting things out as quickly as I can.
+Fork of [liamvdvyver/cmp-bibtex](https://github.com/liamvdvyver/cmp-bibtex). This fork
+
+- adds support for additional citations commands, such as `\parencite`, `\parencites`, `\textcite`, `\footcite` etc.;
+- adds additional information to the preview window;
+- formats preview according to APA;
+- handle more special characters (umlauts etc) and some commands that might be found in titles and author names.
+
+A [PR](https://github.com/liamvdvyver/cmp-bibtex/pull/1) has been submitted to the original repository. Until it is merged, this fork can be used.
 
 ## Setup
 
@@ -18,8 +25,8 @@ require("cmp").setup({
 
 Call `require("cmp-bibtex").setup(opts)`, where opts is a table, supporting the following options:
 
-* `files`: A list of `.bib` files which will always be parsed for suggestions.
-* `filetypes`: A list of filetypes for which the source will be loaded (default `{ "markdown", "tex" }`)
+- `files`: A list of `.bib` files which will always be parsed for suggestions.
+- `filetypes`: A list of filetypes for which the source will be loaded (default `{ "markdown", "tex" }`)
 
 For example, to enable the source for Rmarkdown files:
 
