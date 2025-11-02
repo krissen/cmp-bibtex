@@ -231,7 +231,9 @@ function M.completion_items(file)
       local year = M.get_field(entry, "year")
       local title = latex_to_utf8(M.get_field(entry, "title"))
       local pages = latex_to_utf8(M.get_field(entry, "pages"))
-      local journal = latex_to_utf8(M.get_field(entry, "journaltitle") or M.get_field(entry, "journal"))
+      local journaltitle = M.get_field(entry, "journaltitle")
+      local journal = journaltitle ~= "NA" and latex_to_utf8(journaltitle)
+        or latex_to_utf8(M.get_field(entry, "journal"))
 
       -- Format documentation in APA-like style with type
       local apa_preview = "**" .. (author or "Unknown Author") .. ".** "
