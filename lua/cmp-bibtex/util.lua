@@ -3,7 +3,8 @@ local M = {}
 -- Extract a specific field from a BibTeX entry
 function M.get_field(entry, field)
   -- Match the field and preserve the content within the outermost braces
-  local match = string.match(entry, field .. "%s*=%s*%b{}")
+  -- Use frontier pattern to ensure exact field name match (not partial)
+  local match = string.match(entry, "%f[%w]" .. field .. "%f[%W]%s*=%s*%b{}")
   if match then
     local content = match:match("{(.*)}") -- Extract inside the outermost {}
     return content or "NA"
