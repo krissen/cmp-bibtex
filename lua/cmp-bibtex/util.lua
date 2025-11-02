@@ -3,7 +3,8 @@ local M = {}
 -- Extract a specific field from a BibTeX entry
 function M.get_field(entry, field)
   -- Match the field and preserve the content within the outermost braces
-  local match = string.match(entry, field .. "%s*=%s*%b{}")
+  -- Use frontier pattern to ensure exact field name match (not partial)
+  local match = string.match(entry, "%f[%w]" .. field .. "%f[%W]%s*=%s*%b{}")
   if match then
     local content = match:match("{(.*)}") -- Extract inside the outermost {}
     return content or "NA"
@@ -231,7 +232,9 @@ function M.completion_items(file)
       local year = M.get_field(entry, "year")
       local title = latex_to_utf8(M.get_field(entry, "title"))
       local pages = latex_to_utf8(M.get_field(entry, "pages"))
-      local journal = latex_to_utf8(M.get_field(entry, "journaltitle") or M.get_field(entry, "journal"))
+      local journaltitle = M.get_field(entry, "journaltitle")
+      local journal = journaltitle ~= "NA" and latex_to_utf8(journaltitle)
+        or latex_to_utf8(M.get_field(entry, "journal"))
 
       -- Format documentation in APA-like style with type
       local apa_preview = "**" .. (author or "Unknown Author") .. ".** "
